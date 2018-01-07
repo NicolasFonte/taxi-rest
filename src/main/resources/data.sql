@@ -40,3 +40,18 @@ values
  (8,
  'aced0005737200226f72672e737072696e676672616d65776f726b2e646174612e67656f2e506f696e7431b9e90ef11a4006020002440001784400017978704023000000000000404bfa1cac083127', now(), now(), false, 'ONLINE',
 'driver08pw', 'driver08');
+
+
+-- Add manufacturer
+insert into manufacturer (id, date_created, name) values (1, now(), 'Ford');
+
+-- Add cars to be selected by drivers
+
+insert into car (id, date_created, license_plate, seat_count, convertible, rating, engine_type, manufacturer_id)
+  VALUES (1, now(), 'OLD9132', 5, false, 3.0, 'DIESEL', 1);
+
+insert into car (id, date_created, license_plate, seat_count, convertible, rating, engine_type, manufacturer_id)
+  VALUES (2, now(), 'NFV4501', 7, true, 5.0, 'GAS', 1);
+
+insert into car (id, date_created, license_plate, seat_count, convertible, rating, engine_type, manufacturer_id)
+  VALUES (3, now(), 'KLF4575', 5, false, 4.0, 'ELETRIC', 1);

@@ -30,6 +30,10 @@
         <com.google.guava.guava.version>21.0</com.google.guava.guava.version>
         <io.springfox.springfox-swagger2>2.3.1</io.springfox.springfox-swagger2>
         <io.springfox.springfox-swagger-ui>2.3.1</io.springfox.springfox-swagger-ui>
+        <lombok.version>1.16.10</lombok.version>
+        <junit.version>4.12</junit.version>
+        <org.mockito.version>1.9.5</org.mockito.version>
+        <org.assertj.version>2.3.0</org.assertj.version>
     </properties>
 
     <dependencies>
@@ -43,6 +47,27 @@
         <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-test</artifactId>
+            <scope>test</scope>
+        </dependency>
+
+        <dependency>
+            <groupId>junit</groupId>
+            <artifactId>junit</artifactId>
+            <version>${junit.version}</version>
+            <scope>test</scope>
+        </dependency>
+
+        <dependency>
+            <groupId>org.mockito</groupId>
+            <artifactId>mockito-all</artifactId>
+            <version>${org.mockito.version}</version>
+            <scope>test</scope>
+        </dependency>
+
+        <dependency>
+            <groupId>org.assertj</groupId>
+            <artifactId>assertj-core</artifactId>
+            <version>${org.assertj.version}</version>
             <scope>test</scope>
         </dependency>
 
@@ -90,6 +115,12 @@
             <groupId>io.springfox</groupId>
             <artifactId>springfox-swagger-ui</artifactId>
             <version>${io.springfox.springfox-swagger-ui}</version>
+        </dependency>
+
+        <dependency>
+            <groupId>org.projectlombok</groupId>
+            <artifactId>lombok</artifactId>
+            <version>${lombok.version}</version>
         </dependency>
 
     </dependencies>

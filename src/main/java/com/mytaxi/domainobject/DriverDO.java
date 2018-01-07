@@ -10,6 +10,7 @@ import javax.persistence.EnumType;
 import javax.persistence.Enumerated;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
+import javax.persistence.OneToOne;
 import javax.persistence.Table;
 import javax.persistence.UniqueConstraint;
 import javax.validation.constraints.NotNull;
@@ -53,6 +54,8 @@ public class DriverDO
     @Column(nullable = false)
     private OnlineStatus onlineStatus;
 
+    @OneToOne
+    private CarDO selectedCar;
 
     private DriverDO()
     {
@@ -67,6 +70,7 @@ public class DriverDO
         this.coordinate = null;
         this.dateCoordinateUpdated = null;
         this.onlineStatus = OnlineStatus.OFFLINE;
+        this.selectedCar = null;
     }
 
 
@@ -122,7 +126,6 @@ public class DriverDO
     {
         return coordinate;
     }
-
 
     public void setCoordinate(GeoCoordinate coordinate)
     {
