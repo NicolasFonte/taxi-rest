@@ -26,7 +26,7 @@ public class CarMapperTest
             .licensePlate(LICENSE_PLATE1)
             .build();
 
-        CarDO car = CarMapper.makeCarDO(carToMap);
+        CarDO car = CarMapper.makeCarDO(carToMap, new ManufacturerDO("Ford"));
 
         assertThat(car)
             .isNotNull()
@@ -45,7 +45,7 @@ public class CarMapperTest
         assertThat(carDTO)
             .isNotNull()
             .extracting("licensePlate", "seatCount", "convertible", "rating", "engineType", "manufacturer")
-            .contains(LICENSE_PLATE1, 5, true, 3.0, EngineType.GAS, MANUFACTURER_NAME);
+            .contains(LICENSE_PLATE1, 5, true, 3.0, "GAS", MANUFACTURER_NAME);
     }
 
 
@@ -61,8 +61,8 @@ public class CarMapperTest
             .hasSize(2)
             .extracting("licensePlate", "seatCount", "convertible", "rating", "engineType", "manufacturer")
             .contains(
-                tuple(LICENSE_PLATE1, 5, true, 3.0, EngineType.GAS, MANUFACTURER_NAME),
-                tuple(LICENSE_PLATE2, 7, false, 4.0, EngineType.DIESEL, MANUFACTURER_NAME)
+                tuple(LICENSE_PLATE1, 5, true, 3.0, "GAS", MANUFACTURER_NAME),
+                tuple(LICENSE_PLATE2, 7, false, 4.0, "DIESEL", MANUFACTURER_NAME)
             );
     }
 

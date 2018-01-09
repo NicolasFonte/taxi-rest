@@ -4,10 +4,13 @@ import com.mytaxi.controller.mapper.DriverMapper;
 import com.mytaxi.datatransferobject.DriverDTO;
 import com.mytaxi.domainobject.DriverDO;
 import com.mytaxi.domainvalue.OnlineStatus;
+import com.mytaxi.exception.CarAlreadyInUseException;
 import com.mytaxi.exception.ConstraintsViolationException;
 import com.mytaxi.exception.EntityNotFoundException;
 import com.mytaxi.service.driver.DriverService;
+import com.mytaxi.util.driver.FilteringFunctions;
 import java.util.List;
+import java.util.stream.Collectors;
 import javax.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -79,4 +82,42 @@ public class DriverController
     {
         return DriverMapper.makeDriverDTOList(driverService.find(onlineStatus));
     }
+
+
+    /**
+     * Filter Drivers according car details.
+     * Car details are optionally queried
+     */
+    @GetMapping("/filter")
+    public List<DriverDTO> findDriversByCarDetails(
+        @RequestParam OnlineStatus onlineStatus,
+        @RequestParam(required = false) String manufacturer,
+        @RequestParam(required = false) Integer seatCount,
+        @RequestParam(required = false) Boolean convertible,
+        @RequestParam(required = false) Double minimumRating,
+        @RequestParam(required = false) String engineType)
+        throws ConstraintsViolationException, EntityNotFoundException
+    {
+        List<DriverDO> driversByManufacturer = driverService.find(onlineStatus)
+            .stream()
+            .filter(FilteringFunctions.hasCarDetails(manufacturer, seatCount, convertible, minimumRating, engineType))
+            .collect(Collectors.toList());
+
+        return DriverMapper.makeDriverDTOList(driversByManufacturer);
+    }
+
+
+    @PutMapping("/{driverId}/select")
+    public void selectCar(@Valid @PathVariable long driverId, @Valid @RequestParam String licensePlate) throws EntityNotFoundException, CarAlreadyInUseException
+    {
+        driverService.selectCar(driverId, licensePlate);
+    }
+
+
+    @PutMapping("/{driverId}/release")
+    public void releaseCar(@Valid @PathVariable long driverId) throws EntityNotFoundException
+    {
+        driverService.releaseCar(driverId);
+    }
+
 }

@@ -12,4 +12,6 @@ import org.springframework.data.repository.CrudRepository;
 public interface CarRepository extends CrudRepository<CarDO, Long>
 {
     List<CarDO> findByManufacturer(ManufacturerDO manufacturerDO);
+
+    CarDO findByLicensePlate(String licensePlate);
 }

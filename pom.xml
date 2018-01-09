@@ -34,6 +34,7 @@
         <junit.version>4.12</junit.version>
         <org.mockito.version>1.9.5</org.mockito.version>
         <org.assertj.version>2.3.0</org.assertj.version>
+        <org.hibernate.version>5.0.5.Final</org.hibernate.version>
     </properties>
 
     <dependencies>
@@ -71,6 +72,12 @@
             <scope>test</scope>
         </dependency>
 
+        <dependency>
+            <groupId>org.springframework.security</groupId>
+            <artifactId>spring-security-test</artifactId>
+            <scope>test</scope>
+        </dependency>
+
         <!-- For all mvc and web functions -->
         <dependency>
             <groupId>org.springframework.boot</groupId>
@@ -86,7 +93,7 @@
         <dependency>
             <groupId>org.hibernate</groupId>
             <artifactId>hibernate-java8</artifactId>
-            <version>5.0.5.Final</version>
+            <version>${org.hibernate.version}</version>
         </dependency>
 
         <!-- In-Memory DB -->
@@ -117,10 +124,24 @@
             <version>${io.springfox.springfox-swagger-ui}</version>
         </dependency>
 
+        <!-- Lombok -->
         <dependency>
             <groupId>org.projectlombok</groupId>
             <artifactId>lombok</artifactId>
             <version>${lombok.version}</version>
+        </dependency>
+
+        <!-- Security -->
+
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-devtools</artifactId>
+            <scope>runtime</scope>
+        </dependency>
+
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-security</artifactId>
         </dependency>
 
     </dependencies>

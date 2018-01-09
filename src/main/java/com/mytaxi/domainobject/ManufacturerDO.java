@@ -8,12 +8,14 @@ import javax.persistence.Id;
 import javax.persistence.Table;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
+import lombok.NoArgsConstructor;
 import org.springframework.format.annotation.DateTimeFormat;
 
 @Entity
 @Table(name = "manufacturer")
 @Data
 @EqualsAndHashCode
+@NoArgsConstructor
 public class ManufacturerDO
 {
     @Id
@@ -24,7 +26,7 @@ public class ManufacturerDO
     @DateTimeFormat(iso = DateTimeFormat.ISO.DATE_TIME)
     private ZonedDateTime dateCreated = ZonedDateTime.now();
 
-    private final String name;
+    private String name;
 
 
     public ManufacturerDO(final String name)

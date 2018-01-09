@@ -43,6 +43,18 @@ public class DefaultCarService implements CarService
 
 
     @Override
+    public CarDO findByLicensePlate(String licensePlate) throws EntityNotFoundException
+    {
+        CarDO car = carRepository.findByLicensePlate(licensePlate);
+        if (car == null)
+        {
+            throw new EntityNotFoundException("Could not find car with license plate: " + licensePlate);
+        }
+        return car;
+    }
+
+
+    @Override
     public CarDO create(CarDO carDO) throws ConstraintsViolationException
     {
         CarDO car;
@@ -65,7 +77,7 @@ public class DefaultCarService implements CarService
         ManufacturerDO manufacturerDO = manufacturerRepository.findByName(manufacturer);
         if (manufacturerDO == null)
         {
-            throw new EntityNotFoundException("Manufacturer " + manufacturer + "does not exists!");
+            throw new EntityNotFoundException("Manufacturer " + manufacturer + " does not exists!");
         }
 
         return carRepository.findByManufacturer(manufacturerDO);

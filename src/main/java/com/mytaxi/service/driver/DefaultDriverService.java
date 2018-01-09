@@ -1,11 +1,14 @@
 package com.mytaxi.service.driver;
 
 import com.mytaxi.dataaccessobject.DriverRepository;
+import com.mytaxi.domainobject.CarDO;
 import com.mytaxi.domainobject.DriverDO;
 import com.mytaxi.domainvalue.GeoCoordinate;
 import com.mytaxi.domainvalue.OnlineStatus;
+import com.mytaxi.exception.CarAlreadyInUseException;
 import com.mytaxi.exception.ConstraintsViolationException;
 import com.mytaxi.exception.EntityNotFoundException;
+import com.mytaxi.service.car.CarService;
 import java.util.List;
 import org.slf4j.LoggerFactory;
 import org.springframework.dao.DataIntegrityViolationException;
@@ -23,11 +26,13 @@ public class DefaultDriverService implements DriverService
     private static org.slf4j.Logger LOG = LoggerFactory.getLogger(DefaultDriverService.class);
 
     private final DriverRepository driverRepository;
+    private final CarService carService;
 
 
-    public DefaultDriverService(final DriverRepository driverRepository)
+    public DefaultDriverService(final DriverRepository driverRepository, final CarService carService)
     {
         this.driverRepository = driverRepository;
+        this.carService = carService;
     }
 
 
@@ -110,6 +115,50 @@ public class DefaultDriverService implements DriverService
     public List<DriverDO> find(OnlineStatus onlineStatus)
     {
         return driverRepository.findByOnlineStatus(onlineStatus);
+    }
+
+
+    /**
+     * Assign car to driver if available.
+     *
+     * @param driverId     - driver identification
+     * @param licensePlate - car license plate to be selected
+     * @throws EntityNotFoundException  - if car or driver do not exists
+     * @throws CarAlreadyInUseException - if car is in use
+     */
+    @Override
+    @Transactional
+    public void selectCar(Long driverId, String licensePlate) throws EntityNotFoundException, CarAlreadyInUseException
+    {
+        CarDO car = carService.findByLicensePlate(licensePlate);
+        if (!car.isAvailable())
+        {
+            throw new CarAlreadyInUseException("Car already in use!");
+        }
+        car.setAvailable(false);
+
+        DriverDO driver = findDriverChecked(driverId);
+        driver.setSelectedCar(car);
+    }
+
+
+    /**
+     * Release car from driver.
+     *
+     * @param driverId - driver identification
+     * @throws EntityNotFoundException - if driver or car does not exists
+     */
+    @Override
+    @Transactional
+    public void releaseCar(Long driverId) throws EntityNotFoundException
+    {
+        DriverDO driver = findDriverChecked(driverId);
+        CarDO car = driver.getSelectedCar();
+        if (car != null)
+        {
+            car.setAvailable(true);
+        }
+        driver.setSelectedCar(null);
     }
 
 

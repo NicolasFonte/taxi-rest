@@ -5,9 +5,11 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 import com.google.common.base.Preconditions;
 import javax.persistence.Column;
 import javax.persistence.Embeddable;
+import lombok.EqualsAndHashCode;
 import org.springframework.data.geo.Point;
 
 @Embeddable
+@EqualsAndHashCode
 public class GeoCoordinate
 {
 
@@ -58,47 +60,6 @@ public class GeoCoordinate
     public double getLongitude()
     {
         return this.point.getX();
-    }
-
-
-    @Override
-    public int hashCode()
-    {
-        final int prime = 31;
-        int result = 1;
-        result = prime * result + ((this.point == null) ? 0 : this.point.hashCode());
-        return result;
-    }
-
-
-    @Override
-    public boolean equals(final Object obj)
-    {
-        if (this == obj)
-        {
-            return true;
-        }
-        if (obj == null)
-        {
-            return false;
-        }
-        if (this.getClass() != obj.getClass())
-        {
-            return false;
-        }
-        final GeoCoordinate other = (GeoCoordinate) obj;
-        if (this.point == null)
-        {
-            if (other.point != null)
-            {
-                return false;
-            }
-        }
-        else if (!this.point.equals(other.point))
-        {
-            return false;
-        }
-        return true;
     }
 
 

@@ -9,6 +9,8 @@ public interface CarService
 {
     CarDO findCar(Long id) throws EntityNotFoundException;
 
+    CarDO findByLicensePlate(String licensePlate) throws EntityNotFoundException;
+
     CarDO create(CarDO carDO) throws ConstraintsViolationException;
 
     List<CarDO> findByManufacturer(String manufacturer) throws EntityNotFoundException;

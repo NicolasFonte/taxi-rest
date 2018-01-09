@@ -9,9 +9,9 @@ import java.util.stream.Collectors;
 
 public class CarMapper
 {
-    public static CarDO makeCarDO(CarDTO carDTO)
+    public static CarDO makeCarDO(CarDTO carDTO, ManufacturerDO manufacturerDO)
     {
-        return new CarDO(carDTO.getLicensePlate(), new ManufacturerDO(carDTO.getManufacturer()));
+        return new CarDO(carDTO.getLicensePlate(), manufacturerDO);
     }
 
 
@@ -22,7 +22,7 @@ public class CarMapper
             .convertible(carDO.isConvertible())
             .manufacturer(carDO.getManufacturer().getName())
             .rating(carDO.getRating())
-            .engineType(carDO.getEngineType())
+            .engineType(carDO.getEngineType().toString())
             .seatCount(carDO.getSeatCount())
             .build();
     }

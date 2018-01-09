@@ -4,12 +4,17 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.mytaxi.domainvalue.EngineType;
 import javax.validation.constraints.NotNull;
+import lombok.AccessLevel;
+import lombok.AllArgsConstructor;
 import lombok.Builder;
-import lombok.Data;
+import lombok.Getter;
+import lombok.Setter;
 
 @JsonInclude(JsonInclude.Include.NON_NULL)
 @Builder
-@Data
+@Getter
+@Setter
+@AllArgsConstructor(access = AccessLevel.PRIVATE)
 public class CarDTO
 {
     @JsonIgnore
@@ -24,7 +29,27 @@ public class CarDTO
 
     private double rating;
 
-    private EngineType engineType;
+    private String engineType;
 
     private String manufacturer;
+
+
+    private CarDTO()
+    {
+    }
+
+
+    private CarDTO(
+        String licensePlate, int seatCount, boolean convertible, double rating,
+        String engineType, String manufacturer)
+    {
+        this.licensePlate = licensePlate;
+        this.seatCount = seatCount;
+        this.convertible = convertible;
+        this.rating = rating;
+        this.engineType = engineType;
+        this.manufacturer = manufacturer;
+    }
+
+
 }

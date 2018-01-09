@@ -133,4 +133,15 @@ public class DriverDO
         this.dateCoordinateUpdated = ZonedDateTime.now();
     }
 
+
+    public void setSelectedCar(CarDO selectedCar)
+    {
+        this.selectedCar = selectedCar;
+    }
+
+
+    public CarDO getSelectedCar()
+    {
+        return selectedCar;
+    }
 }

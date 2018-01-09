@@ -47,11 +47,14 @@ insert into manufacturer (id, date_created, name) values (1, now(), 'Ford');
 
 -- Add cars to be selected by drivers
 
-insert into car (id, date_created, license_plate, seat_count, convertible, rating, engine_type, manufacturer_id)
-  VALUES (1, now(), 'OLD9132', 5, false, 3.0, 'DIESEL', 1);
+insert into car (id, date_created, license_plate, seat_count, convertible, rating, engine_type, available,
+manufacturer_id)
+  VALUES (1, now(), 'OLD9132', 5, false, 3.0, 'DIESEL', true, 1);
 
-insert into car (id, date_created, license_plate, seat_count, convertible, rating, engine_type, manufacturer_id)
-  VALUES (2, now(), 'NFV4501', 7, true, 5.0, 'GAS', 1);
+insert into car (id, date_created, license_plate, seat_count, convertible, rating, engine_type,
+available, manufacturer_id)
+  VALUES (2, now(), 'NFV4501', 7, true, 5.0, 'GAS', true, 1);
 
-insert into car (id, date_created, license_plate, seat_count, convertible, rating, engine_type, manufacturer_id)
-  VALUES (3, now(), 'KLF4575', 5, false, 4.0, 'ELETRIC', 1);
+insert into car (id, date_created, license_plate, seat_count, convertible, rating, engine_type,
+available, manufacturer_id)
+  VALUES (3, now(), 'KLF4575', 5, false, 4.0, 'ELETRIC', true, 1);

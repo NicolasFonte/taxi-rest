@@ -1,8 +1,10 @@
 package com.mytaxi.controller;
 
 import com.mytaxi.controller.mapper.CarMapper;
+import com.mytaxi.dataaccessobject.ManufacturerRepository;
 import com.mytaxi.datatransferobject.CarDTO;
 import com.mytaxi.domainobject.CarDO;
+import com.mytaxi.domainobject.ManufacturerDO;
 import com.mytaxi.exception.ConstraintsViolationException;
 import com.mytaxi.exception.EntityNotFoundException;
 import com.mytaxi.service.car.CarService;
@@ -27,23 +29,27 @@ import org.springframework.web.bind.annotation.RestController;
 public class CarController
 {
     private final CarService carService;
+    private final ManufacturerRepository manufacturerRepository;
 
 
     @Autowired
-    public CarController(final CarService carService)
+    public CarController(
+        final CarService carService,
+        final ManufacturerRepository manufacturerRepository)
     {
         this.carService = carService;
+        this.manufacturerRepository = manufacturerRepository;
     }
 
 
     @GetMapping("/{carId}")
-    public CarDTO getCar(@Valid @PathVariable long carId) throws EntityNotFoundException
+    public CarDTO findCar(@Valid @PathVariable long carId) throws EntityNotFoundException
     {
         return CarMapper.makeCarDTO(carService.findCar(carId));
     }
 
 
-    @GetMapping("/{manufacturer}")
+    @GetMapping("/manufacturer/{manufacturer}")
     public List<CarDTO> findCarsByManufacturer(@PathVariable String manufacturer) throws EntityNotFoundException
     {
         return CarMapper.makeCarDTOList(carService.findByManufacturer(manufacturer));
@@ -54,7 +60,9 @@ public class CarController
     @ResponseStatus(HttpStatus.CREATED)
     public CarDTO createCar(@Valid @RequestBody CarDTO carDTO) throws ConstraintsViolationException
     {
-        CarDO carDO = CarMapper.makeCarDO(carDTO);
+        ManufacturerDO manufacturer = manufacturerRepository.findByName(carDTO.getManufacturer());
+        CarDO carDO = CarMapper.makeCarDO(carDTO, manufacturer);
+
         return CarMapper.makeCarDTO(carService.create(carDO));
     }
 
