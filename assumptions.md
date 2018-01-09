@@ -1,4 +1,4 @@
-##Assumptions and General Comments
+## Assumptions and General Comments
 
 - Formatting code according Intellij profile provided.
 
